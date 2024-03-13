@@ -119,6 +119,7 @@ Resources:
         ZipFile: |
           import json
           import boto3
+          import urllib3
           from botocore.vendored import requests
           def handler(event, context):
             response = {
@@ -156,12 +157,13 @@ Resources:
 
             response_body = json.dumps(response)
             headers = {'content-type': '', "content-length": str(len(response_body)) }
-            put_response = requests.put(event['ResponseURL'], headers=headers, data=response_body)
+            http = urllib3.PoolManager()
+            put_response = requests.put("PUT", event['ResponseURL'], headers=headers, body=response_body)
             return response
 
       Handler: index.handler
       Role: !GetAtt CustomResourceLambdaExecutionRole.Arn
-      Runtime: python3.8
+      Runtime: python3.12
       Timeout: 300
 
   CustomResourceLambdaExecutionRole:
