@@ -14,7 +14,7 @@ Parameters:
     MaxLength: 100
     ConstraintDescription: You must enter the EKS cluster name
 
-  JWT_SECRET:
+  JWTSECRET:
     Type: String
     Description: Secret key for JWT authentication
 
